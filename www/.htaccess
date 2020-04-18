@@ -1,0 +1,15 @@
+RewriteEngine on
+RewriteBase /
+Options All -Indexes
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -d [OR]
+RewriteCond %{REQUEST_FILENAME} -l
+RewriteRule ^resource/(.*)$ resource/$1 [L]
+RewriteRule ^catalog/(.*)$ catalog/$1 [L]
+RewriteRule ^assets/(.*)$ assets/$1 [L]
+RewriteRule ^page/(.*)$ page/$1 [L]
+RewriteRule ^.*$ [NC,L]
+RewriteRule ^.*$ index.php [NC,L]
+RewriteRule /.(php|htm|swf|fla|xml|ico|jpg|gif|png|js|css)$ - [L]
+AddDefaultCharset utf-8
+AddType 'text/html; charset=utf-8' .html .htm .shtml
