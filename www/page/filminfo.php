@@ -1,7 +1,7 @@
 <?php
 // ULogin(1);
 
-Head('Тести онлайн') ?>
+Head('Фільми онлайн') ?>
 
 <body>
 
@@ -48,13 +48,13 @@ sidebar();
                 <label for="tab_2">Фільм</label>
 
                 <div id="txt_1">
-                    <video controls width="100%" poster=<?php echo $data['img'] ?>>
+                    <video id="trailer" controls width="100%" poster=<?php echo $data['img'] ?>>
                         <?php echo '<source src="/resource/trailers/'. $Trailer_name[0].'.mp4" type="video/mp4">';?>
                         Sorry, your browser doesn\'t support embedded videos.
                     </video>
                 </div>
                 <div id="txt_2">
-                    <video controls width="100%" poster=<?php echo $data['img'] ?>>
+                    <video id="film" controls width="100%" poster=<?php echo $data['img'] ?>>
                     <?php echo '<source src="/resource/films/'. $film_name[0].'.mp4" type="video/mp4">';?>
                         Sorry, your browser doesn\'t support embedded videos.
                     </video>
@@ -69,7 +69,7 @@ sidebar();
                     <br>
                     <textarea class="form-control comment"  rows="3" name="comment" required="" autocomplete="off"></textarea>
                     <div class="form-group" style="padding-top: 12px; width:200px;">
-                        <input type="submit" name="enter" class="btn btn-success btn-block">
+                        <input type="submit" name="enter" value="Надіслати" class="btn btn-success btn-block">
                     </div>
                 </form>
             </div>
@@ -93,6 +93,15 @@ sidebar();
                             <p><b><?php echo $user['login'] ?></b>, залишив <?php echo $votes['date'] ?></p>
                             <p><?php echo $votes['votes'] ?></p>
                         </td>
+                        <?php if ($_SESSION['USER_GROUP'] > 1) { ?>
+                            <td style="width:110px;">
+                                <form enctype="multipart/form-data" method="POST" action="/account/dellcomment">
+                                    <input hidden name="vote" value="<?php echo $votes['id'] ?>" >
+                                    <input hidden name="film" value="<?php echo $_GET['id_film'] ?>" >
+                                    <input type="submit" name="enter" value="видалити" style="width:100px;" class="btn btn-danger btn-block">
+                                </form>
+                            </td>
+                        <?php } ?>
                     </tr>
                     <?php
                         } ?>

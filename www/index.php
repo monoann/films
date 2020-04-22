@@ -345,11 +345,11 @@ function Menu ()
           </li>';
         if($Page == 'profile')echo'
           <li class="nav-item active">
-              <a class="nav-link" href="/profile">Мій профіль</a> 
+              <a class="nav-link" href="/profile">Профіль</a> 
           </li> ';
         else  echo '
           <li class="nav-item">
-              <a class="nav-link" href="/profile">Мій профіль</a> 
+              <a class="nav-link" href="/profile">Профіль</a> 
           </li>';
         if ($Page =='amin')echo '
          <li class="nav-item active">
@@ -373,11 +373,11 @@ function Menu ()
           </li>';
         if($Page == 'profile')echo'
           <li class="nav-item active">
-              <a class="nav-link" href="/profile">Мій профіль</a> 
+              <a class="nav-link" href="/profile">Профіль</a> 
           </li> ';
         else  echo '
           <li class="nav-item">
-              <a class="nav-link" href="/profile">Мій профіль</a> 
+              <a class="nav-link" href="/profile">Профіль</a> 
           </li>';
 
          echo '

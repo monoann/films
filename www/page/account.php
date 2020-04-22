@@ -104,17 +104,28 @@ if($Module == 'addcountry' and $_POST['enter']){
     Location('/admin');
 }
 
-if($Module == 'addcomment' and $_POST['enter']){
+if($Module == 'addcomment' and $_POST['enter']) {
     $id_user = mysqli_fetch_assoc(mysqli_query($CONNECT, "SELECT `id_user` FROM `users` WHERE `id_user` = '$_POST[user]'"));
     $id_film = mysqli_fetch_assoc(mysqli_query($CONNECT, "SELECT `id_film` FROM `films` WHERE `id_film` = '$_POST[film]'"));
-    if (!$_POST[comment]) {
+    if (!$_POST['comment']) {
         MessageSend(1, 'Коментар порожній');
     }
-    else if ($id_film[id_film] && $id_user) {
+    else if ($id_film['id_film'] && $id_user) {
         mysqli_query($CONNECT, "INSERT INTO `votes`  VALUES (NULL ,'$id_film[id_film]','$id_user[id_user]','$_POST[comment]', now())");
         MessageSend(3, 'Коментар додано');
     } else {
         MessageSend(1, 'Помилка додавання коментарів');
+    }
+    Location("/filminfo?id_film=$id_film[id_film]");
+}
+
+if($Module == 'dellcomment' and $_POST['enter']) {
+    $id_film = mysqli_fetch_assoc(mysqli_query($CONNECT, "SELECT `id_film` FROM `films` WHERE `id_film` = '$_POST[film]'"));
+    if ($id_film['id_film'] && $_POST['vote']) {
+        mysqli_query($CONNECT, "DELETE FROM `votes`  WHERE `id` = '$_POST[vote]' ");
+        MessageSend(3, 'Коментар видалено');
+    } else {
+        MessageSend(1, 'Помилка видалення коментарів');
     }
     Location("/filminfo?id_film=$id_film[id_film]");
 }
