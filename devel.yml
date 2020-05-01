@@ -5,9 +5,14 @@ networks:
 
 services:
   webserver:
-    image: gancster91/film
+    image: monoann/film
     container_name: '7.4.x-webserver'
-    restart: 'always'
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
     ports:
       - 7000:80
       - 8000:443
@@ -21,9 +26,14 @@ services:
     networks:
       net0:
   mysql:
-    image: gancster91/db
+    image: monoann/db
     container_name: 'mysql'
-    restart: 'always'
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
     ports:
       - "${HOST_MACHINE_MYSQL_PORT}:3306"
     volumes:
@@ -39,6 +49,12 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: 'sc-phpmyadmin'
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
     depends_on:
       - mysql
     environment:
@@ -58,6 +74,12 @@ services:
   redis:
     container_name: 'sc-redis'
     image: redis:latest
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
     depends_on:
       - mysql
     ports:
@@ -68,6 +90,12 @@ services:
     image: adminer
     ports:
       - 8080:8080
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
     depends_on:
       - mysql
     networks:
