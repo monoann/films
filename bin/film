@@ -1,0 +1,141 @@
+#!/usr/bin/env bash
+
+set -o errexit
+
+: ${WDIR:=$(realpath $(dirname $(realpath $0))/../../)}
+
+FILM_AUX=${WDIR}/films/utils/film-aux.sh
+HOST_FILM_CONF=${WDIR}/films/etc/host.conf
+
+if [ -f ${HOST_FILM_CONF} ]; then
+    source ${HOST_FILM_CONF}
+    hash -r
+fi
+
+: ${FILM_VERSION:=latest}
+: ${FILM_MODE:=devel}
+
+cd ${WDIR}
+
+cmd_start() {
+    if ${FILM_AUX} assert stack-up ${FILM_MODE} 1; then
+        echo "stack ${FILM_MODE} is up and running" >&2
+        return 0
+    fi
+
+
+    echo "starting stack (mode: ${FILM_MODE})..."
+    env FILM_TAG=${FILM_VERSION} \
+        FILM_REGISTRY=${FILM_REGISTRY} \
+        HOST_FILM_ROOT=${HOST_FILM_ROOT:-${WDIR}} \
+        ${FILM_AUX} film deploy ${FILM_MODE}
+}
+
+
+cmd_stop() {
+    if ! ${FILM_AUX} assert stack-up ${FILM_MODE} 1; then
+        echo "stack ${FILM_MODE} is not running" >&2
+        return 0
+    fi
+
+    docker stack rm ${FILM_MODE}
+
+    ${FILM_AUX} wait containers-shutdown ${FILM_MODE}
+
+    docker container prune -f
+    docker network prune -f
+}
+
+
+cmd_attach() {
+    local service=${1:-""}
+
+    if [ -z ${service} ]; then
+        echo 'service name is required (see available services below):' >&2
+        docker service ls --filter "name=${FILM_MODE}_" --format '{{.Name}}' \
+            | cut -d _ -f 2- \
+            | cat -n - >&2
+        return 1
+    fi
+
+    local srv=${FILM_MODE}_${service#${FILM_MODE}_}
+
+
+    # take into consideration only the first one (if many)
+    local cid
+    read -r cid srv <<< $(docker container ls --filter name=${srv} --format '{{.ID}} {{.Names}}')
+
+    if [ -z ${cid:-""} ]; then
+        echo "sorry, container for service '${service}' not found" >&2
+        return 1
+    fi
+
+    docker exec -it ${cid} env PS1="[\u@${srv%%.*}:\w]\\$ " bash -i -l
+}
+
+
+cmd_destroy() {
+    local answer=
+    read -p "Are you sure? (type 'Y' to confirm): " answer
+
+    if [ ${answer:-"n"} = 'Y' ]; then
+        ${FILM_AUX} film destroy ${FILM_MODE}
+    else
+        echo 'aborted (was not confirmed)' >&2
+    fi
+}
+
+
+cmd_restart() {
+    cmd_stop $@;
+    cmd_start $@;
+}
+
+
+cmd_update() {
+    local cur_ver=${1:?"current version is required"}
+    local new_ver=${2:?"new version is required"}
+
+    ${FILM_AUX} assert version ${new_ver}
+
+    echo "downloading image (version: ${new_ver})..."
+    env FILM_TAG=${new_ver} \
+        ${FILM_AUX} film pull
+
+    # modify host config if it is exist
+    if [ -e ${HOST_FILM_CONF}]; then
+        sed -i -e "s/^FILM_VERSION=.*/FILM_VERSION=${new_ver}/g" ${HOST_FILM_CONF}
+        source ${HOST_FILM_CONF}
+        hash -r
+    fi
+
+    # FIXME: deal with host infrastructure update after
+    # archives on panda.film.com are ready.
+
+    cmd_restart
+}
+
+
+cmd_help() {
+    local ec=${1:-1}
+    local self=$(basename $0)
+    echo 'Usage:' >&2
+    echo "    ${self} COMMAND" >&2
+    echo >&2
+    echo 'Available commands:' >&2
+    declare -F | sed -nre "s/.*cmd_/    ${self} /p;" >&2
+}
+
+
+# aliases
+up() { cmd_start $@; return $?; }
+down() { cmd_stop $@; return $?; }
+
+
+CMD="cmd_${1}"
+[ -n ${CMD#*_} ] || cmd_help
+
+shift 1
+
+${CMD} $@
+exit $?

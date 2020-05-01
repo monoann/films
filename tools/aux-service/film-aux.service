@@ -1,0 +1,10 @@
+[Unit]
+Description=Films aux service
+
+[Service]
+ExecStart=/bin/bash -c "/data/diplom/film-aux.pl >> /var/log/film-aux.log 2>&1"
+EnvironmentFile=/tmp/film-aux.env
+
+[Install]
+WantedBy=multi-user.target
+Alias=film-aux.service

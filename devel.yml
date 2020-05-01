@@ -1,24 +1,27 @@
 version: "3"
 
+networks:
+  net0:
+
 services:
   webserver:
-    build: 
-      context: ./bin/webserver
+    image: gancster91/film
     container_name: '7.4.x-webserver'
     restart: 'always'
     ports:
       - "${HOST_MACHINE_UNSECURE_HOST_PORT}:80"
       - "${HOST_MACHINE_SECURE_HOST_PORT}:443"
-    links: 
+    depends_on: 
       - mysql
     volumes: 
       - ${DOCUMENT_ROOT-./www}:/var/www/html
       - ${PHP_INI-./config/php/php.ini}:/usr/local/etc/php/php.ini
       - ${VHOSTS_DIR-./config/vhosts}:/etc/apache2/sites-enabled
       - ${LOG_DIR-./logs/apache2}:/var/log/apache2
+    networks:
+      net0:
   mysql:
-    build:
-      context: "./bin/${DATABASE}"
+    image: gancster91/db
     container_name: 'mysql'
     restart: 'always'
     ports:
@@ -31,10 +34,12 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      net0:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: 'sc-phpmyadmin'
-    links:
+    depends_on:
       - mysql
     environment:
       PMA_HOST: mysql
@@ -45,11 +50,25 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - '8080:80'
+      - '8181:80'
     volumes: 
       - /sessions
+    networks:
+      net0:
   redis:
     container_name: 'sc-redis'
     image: redis:latest
+    depends_on:
+      - mysql
     ports:
       - "${HOST_MACHINE_REDIS_PORT}:6379"
+    networks:
+      net0:
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysql
+    networks:
+      net0:
