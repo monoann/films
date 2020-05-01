@@ -402,7 +402,7 @@ function sidebar(){
     $Row = mysqli_query($CONNECT, "SELECT *  FROM `category`");
     echo '
 
-	<aside class="sidebar-left-collapse" style="margin-top: 124px;">
+	<aside class="sidebar-left-collapse" style="margin-top: 115px;">
 
 		<a href="/" class="company-logo" ><img src="assets/ico/kino-logo.png" alt=""></a>
 
