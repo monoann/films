@@ -23,6 +23,11 @@ cmd_start() {
         return 0
     fi
 
+    echo "downloading image (version: ${MB_VERSION})..."
+    env FILM_TAG=${FILM_VERSION} \
+        FILM_REGISTRY=${FILM_REGISTRY} \
+        ${FILM_AUX} film pull
+
 
     echo "starting stack (mode: ${FILM_MODE})..."
     env FILM_TAG=${FILM_VERSION} \

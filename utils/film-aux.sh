@@ -9,7 +9,7 @@ SELF=$(basename $0)
 : ${FILM_AUX_SERVICE:=film-aux}
 : ${FILM_REGISTRY:=hub.docker.com}
 : ${FILM_REGISTRY_PROTO:=https}
-: ${FILM_IMAGE:=/gancster91/film}
+: ${FILM_IMAGE:=/monoann/film}
 : ${FILM_TAG:=latest}
 : ${FILM_VERSION:="$(date +%Y%m%d)0"}
 
@@ -86,6 +86,10 @@ build_config() {
 EOF" | sed -re '1{s/^[[:space:]]*//;}'
 }
 
+film_pull() {
+    assert_binary "docker"
+    docker pull "monoann/film:${FILM_TAG}"
+}
 
 make_config() {
     local mode=${1:?$(assert_mode)}
