@@ -211,7 +211,7 @@ if($Module == 'addfilm' and $_POST['enter']){
         }
 
         $Exp = explode(',', $_SESSION['INFO_FILM']);
-       mysqli_query($CONNECT, "INSERT INTO `films`  VALUES (NULL ,'$Exp[0]','$Exp[1]','$Exp[2]','$id_country[id]','$id_cat[id_cat]','$Exp[3]','$path','$path1', '$trailer_path')");
+        mysqli_query($CONNECT, "INSERT INTO `films`  VALUES (NULL ,'$_POST[nameb]','$_POST[author]','$_POST[actor]','$id_country[id]','$id_cat[id_cat]','$_POST[opus]','$path','$path1', '$trailer_path')");
 
 
 
