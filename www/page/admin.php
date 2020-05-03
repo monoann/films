@@ -67,7 +67,7 @@ echo '
 </div>
 
 <form enctype="multipart/form-data" method="POST" action="/account/addfilm" role="form" style=" margin-left: 100px; width: 40%; margin-top: 10%; padding: 0 1% ; float: left">
-    <label for="film"><h3>Додавання книги</h3></label>
+    <label for="film"><h3>Додавання фільму</h3></label>
     <br>
     <label for="email">Виберіть категорію: </label><br>
     <select name="cat" class="selectpicker" style="width: 100%; height:40px;border-radius: 5px">';
