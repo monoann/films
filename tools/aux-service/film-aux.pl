@@ -79,7 +79,7 @@ sub update_stack {
     my $new_version     = $args->{new_version};
     my $mode            = $args->{mode};
 
-    my ( $status, $result ) = exec_shell_cmd( "$host_root/portamdm/bin/mb", 'update', $current_version, $new_version );
+    my ( $status, $result ) = exec_shell_cmd( "$host_root/films/bin/film", 'update', $current_version, $new_version );
     if ( !$status ) {
         log_msg($result);
     }
@@ -95,7 +95,7 @@ sub restart_stack {
     my $mode      = $args->{mode};
     my $host_root = $ENV{HOST_ROOT};
 
-    `$host_root/portamdm/bin/mb restart`;
+    `$host_root/films/bin/film restart`;
 }
 
 my $server = create_server();

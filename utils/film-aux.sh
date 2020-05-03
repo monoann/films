@@ -89,6 +89,7 @@ EOF" | sed -re '1{s/^[[:space:]]*//;}'
 film_pull() {
     assert_binary "docker"
     docker pull "monoann/film:${FILM_TAG}"
+    docker pull "monoann/db:${FILM_TAG}"
 }
 
 make_config() {
@@ -255,7 +256,7 @@ film_destroy() {
     fi
 
     film_rm_aux_service
-    film_rm_portainer_stack
+    #film_rm_portainer_stack
 
     docker container prune -f
     docker volume prune -f
@@ -292,7 +293,7 @@ film_rm_aux_service() {
             sudo systemctl disable "${service_name}.service" >/dev/null 2>&1
 
             sudo rm -f /tmp/${service_name}.env \
-                /opt/${service_name}.pl \
+                /data/diplom/${service_name}.pl \
                 /lib/systemd/system/${service_name}.service  \
                 /var/log/${service_name}.log \
                 /var/run/${service_name}.pid
@@ -498,6 +499,7 @@ wait_containers_shutdown() {
         cts="$(docker container ls -qf label=com.film.mode=${mode})"
     done
     echo "done" >&2
+    film_rm_aux_service
 }
 
 wait_cmd_succeeds() {

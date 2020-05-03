@@ -31,7 +31,6 @@ cmd_start() {
 
     echo "starting stack (mode: ${FILM_MODE})..."
     env FILM_TAG=${FILM_VERSION} \
-        FILM_REGISTRY=${FILM_REGISTRY} \
         HOST_FILM_ROOT=${HOST_FILM_ROOT:-${WDIR}} \
         ${FILM_AUX} film deploy ${FILM_MODE}
 }
@@ -49,6 +48,8 @@ cmd_stop() {
 
     docker container prune -f
     docker network prune -f
+
+    # ${FILM_AUX} film destroy ${FILM_MODE}
 }
 
 
