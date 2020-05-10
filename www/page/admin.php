@@ -46,7 +46,7 @@ Menu();
 
 sidebar();
 echo '
-<div class="row" style="padding-top: 1%">
+<div class="row" style="padding-top: 1%; width:100%">
 <div style="height: 510px; margin-left: 250px; max-width: 20%; margin-top: 10%; padding: 0 1% ; float: left">
 <form method="POST" action="/account/addcat" role="form" style="height: 250px;  padding: 0 1% ; float: left">
     <label for="email"><h3>Додавання категорії фільму</h3></label>
