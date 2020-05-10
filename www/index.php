@@ -424,7 +424,7 @@ echo '
                     while ($datas = mysqli_fetch_assoc($Row2)) {
                         echo '<li style="word-wrap: break-word"><a href="/filminfo?id_film=' . $datas['id_film'].'">' . $datas['namef'].'</a></li>';
                     }}else
-                        echo '<li><a href="/">Нема книг</a></li>';
+                        echo '<li><a href="/">Нема фільмів</a></li>';
             echo ' </ul>';
 echo '
 			</div>';}
