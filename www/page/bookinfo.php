@@ -28,7 +28,7 @@ MessageShow();?>
                  <img class="img-fluid rounded mb-1 mb-md-0" style="max-width: 80%; max-height: 80%; padding: 2% ;margin-bottom: -1%;" src='.$data['img'].' >
              </div>
              <div class="col-md-8" style="word-wrap:break-word;margin-top: 5%;margin-left:-1%;margin-bottom: -1%">
-                 <h3>Назва : '.$data['nameb'].'</h3>
+                 <h3>Назва : '.$data['namef'].'</h3>
                  <h5>Автор : '.$data['author'].'</h5>
                  <h5>Короткий опис :</h5>
                  <p>'.$data['opus'].'</p>

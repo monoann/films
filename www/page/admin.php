@@ -92,7 +92,7 @@ while ($data=mysqli_fetch_assoc($Row)) {
 
     <div class="form-group">
         <label for="email">Назва фільму: </label>
-        <input type="text" class="form-control" id="nameb" name="nameb" required AUTOCOMPLETE="off">
+        <input type="text" class="form-control" id="namef" name="namef" required AUTOCOMPLETE="off">
     </div>
     <div class="form-group">
         <label for="pwd">Режисер: </label>

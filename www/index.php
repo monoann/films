@@ -422,7 +422,7 @@ echo '
                 $Row2 = mysqli_query($CONNECT, "SELECT *  FROM `films` WHERE `id_category`='$data[id_cat]'");
                     if(mysqli_num_rows($Row2)>0){
                     while ($datas = mysqli_fetch_assoc($Row2)) {
-                        echo '<li style="word-wrap: break-word"><a href="/filminfo?id_film=' . $datas['id_film'].'">' . $datas['nameb'].'</a></li>';
+                        echo '<li style="word-wrap: break-word"><a href="/filminfo?id_film=' . $datas['id_film'].'">' . $datas['namef'].'</a></li>';
                     }}else
                         echo '<li><a href="/">Нема книг</a></li>';
             echo ' </ul>';

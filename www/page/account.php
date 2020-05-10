@@ -162,7 +162,7 @@ if($Module == 'addfilm' and $_POST['enter']){
        $id_cat = mysqli_fetch_assoc(mysqli_query($CONNECT, "SELECT `id_cat` FROM `category` WHERE `name` = '$_POST[cat]'"));
        $id_country = mysqli_fetch_assoc(mysqli_query($CONNECT, "SELECT `id` FROM `countries` WHERE `country` = '$_POST[country]'"));
 
-        $_SESSION['INFO_FILM'] = "$_POST[nameb],$_POST[author],$_POST[actor],$_POST[opus]";
+        $_SESSION['INFO_FILM'] = "$_POST[namef],$_POST[author],$_POST[actor],$_POST[opus]";
         if($_FILES["filename"]["size"] > 1024*3*1024)
         {
             echo ("Размір файлу превищує три мегабайти");
@@ -211,12 +211,12 @@ if($Module == 'addfilm' and $_POST['enter']){
         }
 
         $Exp = explode(',', $_SESSION['INFO_FILM']);
-        mysqli_query($CONNECT, "INSERT INTO `films`  VALUES (NULL ,'$_POST[nameb]','$_POST[author]','$_POST[actor]','$id_country[id]','$id_cat[id_cat]','$_POST[opus]','$path','$path1', '$trailer_path')");
+        mysqli_query($CONNECT, "INSERT INTO `films`  VALUES (NULL ,'$_POST[namef]','$_POST[author]','$_POST[actor]','$id_country[id]','$id_cat[id_cat]','$_POST[opus]','$path','$path1', '$trailer_path')");
 
 
 
 
-     MessageSend(3, 'Фільм <b>'.$_POST['nameb'].'</b> додано');
+     MessageSend(3, 'Фільм <b>'.$_POST['namef'].'</b> додано');
        Location('/admin');
 
     }

@@ -70,7 +70,7 @@ INSERT INTO `countries` (`id`, `country`) VALUES
 
 CREATE TABLE IF NOT EXISTS `films` (
   `id_film` int(11) NOT NULL,
-  `nameb` varchar(30) NOT NULL,
+  `namef` varchar(30) NOT NULL,
   `author` varchar(30) NOT NULL,
   `actor` text NOT NULL,
   `country_id` int(11) NOT NULL,
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `films` (
 -- Дамп даних таблиці `films`
 --
 
-INSERT INTO `films` (`id_film`, `nameb`, `author`, `actor`, `country_id`, `id_category`, `opus`, `img`, `file`, `trailer`) VALUES
+INSERT INTO `films` (`id_film`, `namef`, `author`, `actor`, `country_id`, `id_category`, `opus`, `img`, `file`, `trailer`) VALUES
 (34, 'йуйцу', 'йуйцу', '', 0, 1, 'йцуйцуйуц', 'resource/filmslogo/images.jpg', 'resource/films/videoplayback.mp4', 'resource/trailers/videoplayback.mp4'),
 (35, 'gfgh', 'fgh', '', 0, 2, 'fghfgh', 'resource/filmslogo/images.jpg', 'resource/films/videoplayback.mp4', 'resource/trailers/videoplayback.mp4'),
 (36, 'hfhfgh', 'fghgh', '', 0, 2, 'fghfghfghbnbn', 'resource/filmslogo/kino.png', 'resource/films/videoplayback.mp4', 'resource/trailers/videoplayback.mp4'),
