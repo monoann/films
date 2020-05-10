@@ -60,11 +60,11 @@ services:
     environment:
       PMA_HOST: mysql
       PMA_PORT: 3306
-      PMA_USER: ${MYSQL_USER}
-      PMA_PASSWORD: ${MYSQL_PASSWORD}
+      PMA_USER: ${USER_MYSQL}
+      PMA_PASSWORD: ${USER_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_USER: ${USER_MYSQL}
+      MYSQL_PASSWORD: ${USER_PASSWORD}
     ports:
       - '8181:80'
     volumes: 

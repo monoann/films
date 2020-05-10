@@ -6,6 +6,7 @@ set -o errexit
 
 FILM_AUX=${WDIR}/films/utils/film-aux.sh
 HOST_FILM_CONF=${WDIR}/films/etc/host.conf
+ENV_FILM=${WDIR}/films/.env
 
 if [ -f ${HOST_FILM_CONF} ]; then
     source ${HOST_FILM_CONF}
@@ -14,6 +15,14 @@ fi
 
 : ${FILM_VERSION:=latest}
 : ${FILM_MODE:=devel}
+
+if [ -f ${ENV_FILM} ]; then
+    source ${ENV_FILM}
+    hash -r
+fi
+
+: ${USER_MYSQL:=docker}
+: ${USER_PASSWORD:=docker}
 
 cd ${WDIR}
 
@@ -32,6 +41,8 @@ cmd_start() {
     echo "starting stack (mode: ${FILM_MODE})..."
     env FILM_TAG=${FILM_VERSION} \
         HOST_FILM_ROOT=${HOST_FILM_ROOT:-${WDIR}} \
+        USER_MYSQL=${USER_MYSQL} \
+        USER_PASSWORD=${USER_PASSWORD} \
         ${FILM_AUX} film deploy ${FILM_MODE}
 }
 
