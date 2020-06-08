@@ -19,10 +19,10 @@ services:
     depends_on: 
       - mysql
     volumes: 
-      - ${DOCUMENT_ROOT-./www}:/var/www/html
-      - ${PHP_INI-./config/php/php.ini}:/usr/local/etc/php/php.ini
-      - ${VHOSTS_DIR-./config/vhosts}:/etc/apache2/sites-enabled
-      - ${LOG_DIR-./logs/apache2}:/var/log/apache2
+      - /data/diplom/films/www:/var/www/html
+      - /data/diplom/films/config/php/php.ini:/usr/local/etc/php/php.ini
+      - /data/diplom/films/config/vhosts:/etc/apache2/sites-enabled
+      - /data/diplom/films/logs/apache2:/var/log/apache2
     networks:
       net0:
   mysql:
@@ -37,8 +37,8 @@ services:
     ports:
       - "${HOST_MACHINE_MYSQL_PORT}:3306"
     volumes:
-      - ${MYSQL_DATA_DIR-./data/mysql}:/var/lib/mysql
-      - ${MYSQL_LOG_DIR-./logs/mysql}:/var/log/mysql
+      - /data/diplom/films/data/mysql/:/var/lib/mysql/
+      - /data/diplom/films/logs/mysql/:/var/log/mysql/
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
